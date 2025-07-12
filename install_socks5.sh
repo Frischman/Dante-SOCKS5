@@ -1,5 +1,5 @@
 #!/bin/bash
-# install_socks5.sh - Clean, stable Dante SOCKS5 one-click installer with /var/log/danted.log logging for Debian/Ubuntu (x86/ARM)
+# install_socks5.sh - Dante SOCKS5 一键安装脚本 (Debian/Ubuntu)
 
 set -e
 
@@ -46,10 +46,11 @@ if [ -z "$INTERFACE" ]; then
     exit 1
 fi
 
-echo -e "${GREEN}📝 配置 /var/log/danted.log 日志文件权限${NC}"
+# 确保日志文件存在并可写
 touch /var/log/danted.log
-chown nobody:nogroup /var/log/danted.log
-chmod 644 /var/log/danted.log
+chown proxy "$PROXYUSER": /var/log/danted.log || true
+chmod 644 /var/log/danted.log || true
+echo -e "${GREEN}📝 配置 /var/log/danted.log 日志文件权限${NC}"
 
 echo -e "${GREEN}📝 生成 /etc/danted.conf 配置${NC}"
 cat > /etc/danted.conf <<EOF
