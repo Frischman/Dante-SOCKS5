@@ -1,4 +1,4 @@
-````markdown
+
 # 🚀 Dante SOCKS5 Proxy 一键安装脚本
 
 轻量、稳定、即插即用的 **Dante SOCKS5 一键安装脚本**，适合 **内网穿透、游戏 UDP 加速、科学上网、流量中转代理**使用。
@@ -25,7 +25,7 @@
 
 ```bash
 apt update && apt upgrade -y
-````
+```
 
 ### 2️⃣ 一键安装 Dante SOCKS5
 
@@ -35,11 +35,11 @@ apt update && apt upgrade -y
 bash <(curl -Ls https://raw.githubusercontent.com/Frischman/Dante-SOCKS5/main/install_socks5.sh)
 ```
 
-安装过程中将提示：
+3️⃣ 安装过程中将提示：
 
-* 代理端口（默认：1080，可自定义）
-* 代理用户名（默认：proxyuser，可自定义）
-* 代理密码（必填）
+- 代理端口（默认：1080，可自定义）
+- 代理用户名（默认：proxyuser，可自定义）
+- 代理密码（必填）
 
 脚本会自动完成安装 Dante、Fail2Ban、配置 UDP 转发、自动开机自启及显示 IPv4/IPv6。
 
@@ -76,7 +76,7 @@ systemctl restart danted
 查看实时日志：
 
 ```bash
-tail -f /var/log/danted.log
+journalctl -u danted -f
 ```
 
 ---
@@ -147,12 +147,12 @@ rm -f /etc/fail2ban/jail.d/danted.conf /etc/fail2ban/filter.d/danted.conf
 
 ## 📑 文件位置
 
-| 文件                       | 路径                                 |
-| ------------------------ | ---------------------------------- |
-| Dante 配置文件               | /etc/danted.conf                   |
-| Dante 日志                 | /var/log/danted.log                |
-| Fail2Ban 日志              | /var/log/fail2ban.log              |
-| Fail2Ban Dante Jail 配置   | /etc/fail2ban/jail.d/danted.conf   |
+| 文件                    | 路径                              |
+|-------------------------|---------------------------------|
+| Dante 配置文件          | /etc/danted.conf                 |
+| Dante 日志              | /var/log/danted.log              |
+| Fail2Ban 日志           | /var/log/fail2ban.log            |
+| Fail2Ban Dante Jail 配置 | /etc/fail2ban/jail.d/danted.conf |
 | Fail2Ban Dante Filter 配置 | /etc/fail2ban/filter.d/danted.conf |
 
 > 如修改配置后需重启生效：
@@ -168,13 +168,13 @@ systemctl restart fail2ban
 
 系统：
 
-* Debian 10 / 11 / 12
-* Ubuntu 18.04 / 20.04 / 22.04
+- Debian 10 / 11 / 12
+- Ubuntu 18.04 / 20.04 / 22.04
 
 架构：
 
-* x86\_64
-* ARM (armv7 / arm64)
+- x86_64
+- ARM (armv7 / arm64)
 
 ---
 
@@ -199,4 +199,3 @@ systemctl restart fail2ban
 🪪 License
 
 本项目基于 MIT License 开源发布。
-
