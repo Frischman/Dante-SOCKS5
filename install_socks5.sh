@@ -130,4 +130,5 @@ if systemctl is-active --quiet danted; then
     echo "=============================="
 else
     echo -e "${RED}❌ 服务启动失败，请检查 /etc/danted.conf 或执行 journalctl -u danted -f 查看日志${NC}"
-    exit
+    exit 1
+fi
