@@ -1,5 +1,5 @@
 #!/bin/bash
-# install_socks5.sh - Dante SOCKS5 + SOCKS5h 一键安装脚本 (Debian/Ubuntu)
+# install_socks5h.sh - Dante SOCKS5 + SOCKS5h 一键安装脚本 (Debian/Ubuntu)
 
 set -e
 
@@ -47,24 +47,21 @@ if [ -z "$INTERFACE" ]; then
 fi
 
 # 确保日志文件存在并可写
-touch /var/log/danted.log
-chown "$PROXYUSER":"$PROXYUSER" /var/log/danted.log || true
-chmod 644 /var/log/danted.log || true
-echo -e "${GREEN}📝 配置 /var/log/danted.log 日志文件权限${NC}"
+touch /tmp/danted.log
+chown "$PROXYUSER":"$PROXYUSER" /tmp/danted.log || true
+chmod 644 /tmp/danted.log || true
+echo -e "${GREEN}📝 配置 /tmp/danted.log 日志文件权限${NC}"
 
 echo -e "${GREEN}📝 生成 /etc/danted.conf 配置${NC}"
 cat > /etc/danted.conf <<EOF
-logoutput: /var/log/danted.log
+logoutput: /tmp/danted.log
 internal: 0.0.0.0 port = $PORT
 internal: :: port = $PORT
 external: $INTERFACE
-method: username
+
+socksmethod: username
 user.notprivileged: nobody
 
-# 让 Dante 支持 socks5h (服务端解析 DNS)
-resolvemethod: rfc1928
-resolveprotocol: fake
-
 client pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
     log: connect disconnect
@@ -77,13 +74,13 @@ socks pass {
     from: 0.0.0.0/0 to: 0.0.0.0/0
     command: bind connect udpassociate
     log: connect disconnect
-    method: username
+    socksmethod: username
 }
 socks pass {
     from: ::/0 to: ::/0
     command: bind connect udpassociate
     log: connect disconnect
-    method: username
+    socksmethod: username
 }
 EOF
 
@@ -96,7 +93,7 @@ cat > /etc/fail2ban/jail.d/danted.conf <<EOF
 enabled = true
 port = $PORT
 filter = danted
-logpath = /var/log/danted.log
+logpath = /tmp/danted.log
 maxretry = 5
 bantime = 86400
 findtime = 600
